@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Sorpréndete con tu próxima lectura!</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <style>
+    /* Colores personalizados */
+    :root {
+      --naranja: #FE6500;
+      --azul-medio: #1E3E62;
+      --azul-oscuro: #0B192C;
+      --negro: #000000;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Video de fondo */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* Sección principal */
+    section {
+      position: relative;
+      color: var(--azul-oscuro);
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      background: rgba(11, 25, 44, 0.7); /* Fondo semi-transparente para mejor visibilidad del texto */
+      padding: 2rem;
+    }
+
+    section h1 {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--naranja);
+    }
+
+    section p {
+      font-size: 1.25rem;
+      color: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+      background-color: var(--naranja);
+      border-color: var(--naranja);
+      font-size: 1.2rem;
+      padding: 0.75rem 1.5rem;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--azul-medio);
+      border-color: var(--azul-medio);
+      color: var(--naranja);
+    }
+
+    header {
+      background-color: var(--azul-oscuro);
+      padding: 0.5rem 0;
+      position: sticky;  /* Hace que el header se quede fijo al hacer scroll */
+      top: 0;            /* Lo coloca en la parte superior de la pantalla */
+      z-index: 1000;     /* Asegura que el header se quede encima de otras secciones */
+      width: 100%;       /* Se asegura de que el header ocupe todo el ancho */
+    }
+
+    header .nav-link {
+      color: white;
+      font-weight: bold;
+    }
+
+    header .nav-link:hover {
+      color: var(--azul-medio);
+    }
+
+    /* Sección de opciones de cajas */
+    .cajas-container {
+      width: 100%; /* Asegura que la sección ocupe todo el ancho */
+      background-color: var(--azul-oscuro); /* Fondo azul medio */
+      padding: 3rem 0;
+    }
+
+    .cajas {
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      gap: 2rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .caja {
+      background-color: var(--azul-medio);
+      color: white;
+      padding: 1.5rem;
+      width: 300px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .caja h2 {
+      color: #FE6500;
+      margin-bottom: 1rem;
+    }
+
+    .caja p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .caja .precio {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+
+    .caja .btn-primary {
+      background-color: var(--naranja);
+      border-color: var(--naranja);
+    }
+
+    .caja .btn-primary:hover {
+      background-color: var(--azul-oscuro);
+      border-color: var(--azul-oscuro);
+      color: var(--naranja);
+    }
+
+    /* Cambiar color del título de la sección "Elige tu Caja" */
+    #cajas h2 {
+      color: white; /* Establecer color blanco */
+    }
+
+    /* Sección "Sobre Nosotros" */
+    #sobre-nosotros {
+      background: rgba(11, 25, 44, 0.7); /* Fondo semi-transparente, igual que la sección principal */
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    /* Sección "Miembros" */
+    #miembros {
+      background-color: var(--azul-oscuro); /* Fondo igual que la sección de cajas */
+      padding: 3rem 0;
+    }
+
+    #miembros .miembro {
+      margin: 1rem;
+    }
+
+    #miembros img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    #miembros p {
+      color: white;
+      margin-top: 1rem;
+    }
+
+    /* Sección de Contacto */
+    #contacto {
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    #contacto input,
+    #contacto textarea {
+      width: 100%;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #contacto button {
+      background-color: var(--naranja);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 5px;
+    }
+
+    #comunidad {
+      padding: 2rem 0;
+      font-family: Arial, sans-serif;
+    }
+
+    #comunidad .container {
+      width: 80%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    #comunidad h2 {
+     color: var(--naranja);
+     font-size: 2rem;
+    }
+
+    #comunidad p {
+      color: #0B192C;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    #comentario-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    #comentario-form textarea {
+      width: 80%;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: none;
+      min-height: 100px;
+    }
+
+    #comentario-form button {
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      color: white;
+      background-color: var(--azul-medio);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #comentario-form button:hover {
+      background-color: var(--naranja); /* Cambia el color al pasar el cursor */
+    }
+
+.comentarios {
+  margin-top: 2rem;
+  text-align: left;
+  max-width: 80%;
+  margin: 2rem auto;
+}
+
+.comentario {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comentario p {
+  margin: 0;
+}
+
+.comentario strong {
+  color: var(--azul-oscuro);
+}
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      section h1 {
+        font-size: 2.5rem;
+      }
+
+      section p {
+        font-size: 1rem;
+      }
+
+      .btn-primary {
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+      }
+
+      /* Asegurar que las cajas se apilen de forma vertical en pantallas pequeñas */
+      .cajas {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      /* Miembros en columna en pantallas pequeñas */
+      #miembros .row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Video de fondo -->
+  <video class="video-background" autoplay muted loop preload="auto">
+    <source src="./videos/38918-418897629_small.mp4" type="video/mp4">
+    Tu navegador no soporta el video de fondo.
+  </video>
+
+  <!-- Header -->
+  <header>
+    <div class="container d-flex justify-content-between align-items-center">
+      <!-- Logo -->
+      <a href="#" class="navbar-brand">
+        <img src="./assets/LogoNaranja.png" alt="Logo" height="50">
+      </a>
+      <!-- Menú de navegación -->
+      <nav>
+        <ul class="nav">
+          <li class="nav-item"><a href="#cajas" class="nav-link">Cajas</a></li>
+          <li class="nav-item"><a href="#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
+          <li class="nav-item"><a href="#contacto" class="nav-link">Contáctanos</a></li>
+          <!-- Botón para crear cuenta -->
+          <li class="nav-item ml-auto"><a href="#crear-cuenta" class="nav-link">Crear Cuenta</a></li>
+          <li class="nav-item ml-auto"><a href="#comunidad" class="nav-link">Comunidad</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Sección principal -->
+  <section>
+    <h1>¡Sorpréndete con tu próxima lectura!</h1>
+    <p>Recibe cada mes una caja misteriosa llena de libros que te encantarán.</p>
+    <a href="#cajas" class="btn btn-primary">¡Ordena tu caja ahora!</a>
+  </section>
+
+  <!-- Sección de opciones de cajas -->
+  <section id="cajas" class="cajas-container">
+    <h1 style="color: white;">Elige tu Caja</h1>
+    <div class="cajas">
+      <!-- Caja Principiante -->
+      <div class="caja">
+        <h2 style="color: #FE6500;">Principiante</h2>
+        <p class="precio">250 BS</p>
+        <p>Incluye libro para principiantes, sticker QR de "Recomendaciones", hoja de Retos, cuaderno (pequeño), marca páginas, 3 lápices, 3 marcadores.</p>
+        <a href="#" class="btn btn-primary">ORDENAR</a>
+      </div>
+
+      <!-- Caja Avanzado -->
+      <div class="caja">
+        <h2 style="color: #FE6500;">Experimentado</h2>
+        <p class="precio">350 BS</p>
+        <p>Incluye libro para experimentados, calendario temático, frases motivacionales (hoja), folleto de tips creativos, set de 4 resaltadores, lámpara portátil.</p>
+        <a href="#" class="btn btn-primary">ORDENAR</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección "Sobre Nosotros" -->
+  <section id="sobre-nosotros">
+    <div class="container">
+      <h1>Conócenos</h1>
+      <p>En Westover Mystery Box, nos apasiona transformar la lectura y la creatividad en una experiencia única. Ofrecemos cajas diseñadas para inspirar a lectores y escritores de todos los niveles, desde quienes comienzan a explorar el mundo de los libros hasta aquellos que buscan superar bloqueos creativos.</p>
+      <p>Cada caja contiene un libro sorpresa, un cuaderno en blanco para plasmar tus ideas, notas inspiradoras y elementos que complementan la historia, todo pensado para ayudarte a explorar nuevas ideas y perspectivas.</p>
+    </div>
+  </section>
+
+  <!-- Sección "Miembros" -->
+  <section id="miembros">
+    <div class="container text-center">
+      <h1 style="color: white; margin-bottom: 2rem;">Conoce a Nuestro Equipo</h1>
+      <div class="row">
+        <!-- Miembro 1 -->
+        <div class="col-6 col-md-3">
+          <div class="miembro">
+            <img src="./assets/leo.jpg" alt="Miembro 1" class="img-fluid rounded-circle">
+            <p>Leonardo Farel</p>
+          </div>
+        </div>
+
+        <!-- Miembro 2 -->
+        <div class="col-6 col-md-3">
+          <div class="miembro">
+            <img src="./assets/Gabi.jpg" alt="Miembro 2" class="img-fluid rounded-circle">
+            <p>Gabriela Bernachi</p>
+          </div>
+        </div>
+
+        <!-- Miembro 3 -->
+        <div class="col-6 col-md-3">
+          <div class="miembro">
+            <img src="./assets/Vene.jpg" alt="Miembro 3" class="img-fluid rounded-circle">
+            <p>Camila Gutierrez</p>
+          </div>
+        </div>
+
+        <!-- Miembro 4 -->
+        <div class="col-6 col-md-3">
+          <div class="miembro">
+            <img src="./assets/alison.jpg" alt="Miembro 4" class="img-fluid rounded-circle">
+            <p>Alison Delgadillo</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de contacto -->
+  <section id="contacto">
+    <h1 style="color: #FE6500;">Contáctanos</h1>
+    <form action="#">
+      <input type="text" placeholder="Tu nombre" required>
+      <input type="email" placeholder="Tu correo" required>
+      <textarea placeholder="Tu mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+
+<!-- Sección Crear Cuenta -->
+<section id="crear-cuenta" style="background-color: var(--azul-oscuro); color: white; padding: 4rem 2rem; text-align: center;">
+    <h1 style="color: white;">Crea tu Cuenta</h1>
+    <p>¡Únete a nuestra comunidad y recibe tu caja sorpresa cada mes!</p>
+    <form action="#" method="POST" style="max-width: 500px; margin: 0 auto;">
+      <input type="text" name="nombre" placeholder="Tu nombre completo" required style="width: 100%; padding: 1rem; margin: 1rem 0; border: none; border-radius: 5px;">
+      <input type="email" name="email" placeholder="Tu correo electrónico" required style="width: 100%; padding: 1rem; margin: 1rem 0; border: none; border-radius: 5px;">
+      <input type="password" name="password" placeholder="Tu contraseña" required style="width: 100%; padding: 1rem; margin: 1rem 0; border: none; border-radius: 5px;">
+      <button type="submit" style="background-color: var(--naranja); color: white; padding: 1rem 2rem; font-size: 1.2rem; border: none; border-radius: 5px;">Crear Cuenta</button>
+    </form>
+  </section>
+
+  <section id="comunidad">
+    <div class="container">
+      <h1>Comunidad</h1>
+      <p style="color: white;">¡Comparte tu experiencia con nosotros! Deja un comentario y únete a la conversación.</p>
+      
+      <!-- Formulario de comentario -->
+      <form id="comentario-form" action="/submit-comment" method="POST">
+        <textarea id="comentario" name="comentario" placeholder="Escribe tu comentario..." required></textarea>
+        <button type="submit">Enviar Comentario</button>
+      </form>
+  
+      <!-- Lista de comentarios -->
+      <div class="comentarios">
+        <div class="comentario">
+          <p><strong>Juan Pérez:</strong> “No puedo dejar de pensar en cómo una caja tan pequeña me ayudó a desbloquear mi creatividad. ¡Me siento renovado! Cada cosa dentro me dio una idea nueva para mi proyecto. ¿Alguien más ha experimentado lo mismo?”</p>
+        </div>
+        <div class="comentario">
+          <p><strong>Ana Gómez:</strong> "Acabo de recibir mi primera caja misteriosa y WOW. Tenía el bloqueo creativo más fuerte y solo con abrirla ya me llegaron mil ideas. Me encantó cómo los objetos me empujaron a mirar el arte desde otra perspectiva."</p>
+        </div>
+        <!-- Más comentarios aparecerán aquí -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="./js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
